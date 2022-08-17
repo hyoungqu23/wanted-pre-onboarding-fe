@@ -28,5 +28,7 @@ const StyledTodoButtons = styled.div`
   justify-content: space-between;
   gap: 1em;
 
-  border: 1px solid #000;
+  button {
+    color: blue;
+  }
 `;

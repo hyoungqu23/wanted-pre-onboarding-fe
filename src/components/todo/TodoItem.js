@@ -2,12 +2,18 @@ import React from 'react';
 import styled from 'styled-components';
 import TodoButtons from './TodoButtons';
 
-const TodoItem = () => {
+const TodoItem = ({ todos }) => {
   return (
-    <StyledTodoItem>
-      TodoItem
-      <TodoButtons />
-    </StyledTodoItem>
+    <>
+      {todos.map((todo) => {
+        return (
+          <StyledTodoItem key={todo.id}>
+            <p>{todo.todo}</p>
+            <TodoButtons />
+          </StyledTodoItem>
+        );
+      })}
+    </>
   );
 };
 
@@ -18,4 +24,6 @@ const StyledTodoItem = styled.li`
   flex-direction: row;
   width: 100%;
   justify-content: space-between;
+
+  margin: 1em 0;
 `;

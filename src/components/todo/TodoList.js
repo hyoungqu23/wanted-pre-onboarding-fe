@@ -2,10 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import TodoItem from './TodoItem';
 
-const TodoList = () => {
+const TodoList = ({ todos }) => {
   return (
     <Styledtodolist>
-      <TodoItem />
+      <TodoItem todos={todos} />
     </Styledtodolist>
   );
 };
