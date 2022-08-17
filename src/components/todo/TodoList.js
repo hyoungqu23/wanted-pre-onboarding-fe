@@ -4,15 +4,17 @@ import TodoItem from './TodoItem';
 
 const TodoList = () => {
   return (
-    <div>
-      <h2>Todo</h2>
-      <ul>
-        <TodoItem />
-      </ul>
-    </div>
+    <Styledtodolist>
+      <TodoItem />
+    </Styledtodolist>
   );
 };
 
 export default TodoList;
 
-const Styledtodolist = styled.div``;
+const Styledtodolist = styled.ul`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;

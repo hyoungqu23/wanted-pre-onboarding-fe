@@ -11,4 +11,5 @@ const StyledAppLayout = styled.section`
   width: 50%;
   height: 100vh;
   margin: 0 auto;
+  padding: 2.5rem 0;
 `;
