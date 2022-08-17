@@ -55,10 +55,10 @@ const StyledTodoForm = styled.form`
 
   input,
   button {
-    margin-bottom: 0.5rem;
-    padding: 0.5rem;
+    margin-bottom: 0.5em;
+    padding: 0.5em;
     border-radius: 8px;
-    height: 2rem;
+    height: 2em;
     border: none;
     background-color: #f5f5f5;
 
@@ -72,7 +72,7 @@ const StyledTodoForm = styled.form`
   }
 
   button {
-    font-size: 0.8rem;
+    font-size: 0.8em;
     font-weight: bold;
     background-color: #ffc107;
 
