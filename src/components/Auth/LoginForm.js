@@ -1,14 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { checkEmail, checkPassword } from '../../utils/functions';
 
 const LoginForm = () => {
   const navigate = useNavigate();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const [validation, setValidation] = useState({
+    email: false,
+    password: false,
+  });
+
+  useEffect(() => {
+    setValidation({
+      email: checkEmail(email),
+      password: checkPassword(password),
+    });
+  }, [email, password]);
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -34,8 +47,6 @@ const LoginForm = () => {
       );
       localStorage.setItem('token', response.data.access_token);
 
-      console.log('response', response);
-
       navigate('/todo');
     } catch (error) {
       console.log(error);
@@ -54,7 +65,11 @@ const LoginForm = () => {
           id="passwordInput"
           onChange={handlePasswordChange}
         />
-        <button type="submit" onClick={handleSubmit}>
+        <button
+          type="submit"
+          onClick={handleSubmit}
+          disabled={!(validation.email && validation.password)}
+        >
           Login
         </button>
       </form>
@@ -75,36 +90,40 @@ const StyledLoginForm = styled.div`
     flex-direction: column;
     width: 80%;
 
+    label {
+      font-size: 0.75em;
+    }
+
     input,
     button {
-      margin-bottom: 0.5rem;
-      padding: 0.5rem;
+      margin-bottom: 0.5em;
+      padding: 0.5em;
       border-radius: 8px;
-      height: 2rem;
-      border: none;
-      background-color: #f5f5f5;
+      height: 2em;
 
-      &:focus {
-        background-color: #ffc107;
-      }
-
-      &:hover {
-        border: 2.5px solid #ffc107;
+      &::placeholder {
+        color: #aaa;
+        font-size: 0.75em;
       }
     }
 
-    button {
-      font-size: 1.25rem;
-      background-color: #ffc107;
+    input {
+      background-color: #e3e3e3;
+    }
 
-      &:hover {
-        border: 2.5px solid black;
+    button {
+      font-size: 1em;
+      background-color: #ffc107;
+      font-weight: bold;
+
+      &:disabled {
+        background-color: #e3e3e3;
       }
     }
   }
 
   a {
-    color: red;
+    color: #8af;
     font-weight: bold;
     text-decoration: none;
   }
