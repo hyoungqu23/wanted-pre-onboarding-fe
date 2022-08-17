@@ -1,13 +1,33 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import {
+  checkEmail,
+  checkPassword,
+  checkPasswordConfirm,
+} from '../../utils/functions';
 
 const SignUpForm = () => {
   const navigate = useNavigate();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [passwordConfirm, setPasswordConfirm] = useState('');
+
+  const [validation, setValidation] = useState({
+    email: false,
+    password: false,
+    passwordConfirm: false,
+  });
+
+  useEffect(() => {
+    setValidation({
+      email: checkEmail(email),
+      password: checkPassword(password),
+      passwordConfirm: checkPasswordConfirm(password, passwordConfirm),
+    });
+  }, [email, password, passwordConfirm]);
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -17,26 +37,26 @@ const SignUpForm = () => {
     setPassword(e.target.value);
   };
 
+  const handlePasswordConfirmChange = (e) => {
+    setPasswordConfirm(e.target.value);
+  };
+
   const handleSubmit = async (e) => {
-    console.log(e);
     e.preventDefault();
 
-    try {
-      const response = await axios.post(
-        'https://5co7shqbsf.execute-api.ap-northeast-2.amazonaws.com/production/auth/signup',
-        {
-          email,
-          password,
-        },
-      );
-
-      // localStorage.setItem('token', response.data.access_token);
-
-      console.log('response', response);
-
-      navigate('/');
-    } catch (error) {
-      console.log(error, error.message);
+    if (validation.email && validation.password) {
+      try {
+        await axios.post(
+          'https://5co7shqbsf.execute-api.ap-northeast-2.amazonaws.com/production/auth/signup',
+          {
+            email,
+            password,
+          },
+        );
+        navigate('/');
+      } catch (error) {
+        console.log(error, error.message);
+      }
     }
   };
 
@@ -45,12 +65,38 @@ const SignUpForm = () => {
       <h1>Sign UP</h1>
       <form>
         <label>Email</label>
-        <input type="text" onChange={handleEmailChange} />
+        <input
+          type="text"
+          onChange={handleEmailChange}
+          isvalid={validation.email ? 'true' : 'false'}
+          placeholder="Enter your Email"
+          autoComplete="off"
+        />
         <label>Password</label>
-        <input type="password" onChange={handlePasswordChange} />
+        <input
+          type="password"
+          onChange={handlePasswordChange}
+          isvalid={validation.password ? 'true' : 'false'}
+          placeholder="Enter your password"
+        />
         <label>Password Confirm</label>
-        <input type="password" />
-        <button type="submit" onClick={handleSubmit}>
+        <input
+          type="password"
+          onChange={handlePasswordConfirmChange}
+          isvalid={validation.passwordConfirm ? 'true' : 'false'}
+          placeholder="Enter your password again"
+        />
+        <button
+          type="submit"
+          onClick={handleSubmit}
+          disabled={
+            !(
+              validation.email &&
+              validation.password &&
+              validation.passwordConfirm
+            )
+          }
+        >
           Join Us
         </button>
       </form>
@@ -76,28 +122,28 @@ const StyledSignUpForm = styled.div`
 
     input,
     button {
-      margin-bottom: 0.5rem;
-      padding: 0.5rem;
+      margin-bottom: 0.5em;
+      padding: 0.5em;
       border-radius: 8px;
-      height: 2rem;
-      border: none;
-      background-color: #f5f5f5;
+      height: 2em;
 
-      &:focus {
-        background-color: #ffc107;
-      }
-
-      &:hover {
-        border: 1px solid #ffc107;
+      &::placeholder {
+        color: #aaa;
+        font-size: 0.75em;
       }
     }
 
-    button {
-      font-size: 1rem;
-      background-color: #ffc107;
+    input {
+      background-color: #e3e3e3;
+    }
 
-      &:hover {
-        border: 1px solid black;
+    button {
+      font-size: 1em;
+      background-color: #ffc107;
+      font-weight: bold;
+
+      &:disabled {
+        background-color: #e3e3e3;
       }
     }
   }
