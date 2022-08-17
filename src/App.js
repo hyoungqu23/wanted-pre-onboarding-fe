@@ -1,9 +1,9 @@
-import './App.css';
-import LoginForm from './components/LoginForm';
-import AppLayout from './components/layout/AppLayout';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import SignUpForm from './components/SignUpForm';
-import Todo from './components/todo/Todo';
+import './App.css';
+import LoginForm from './Components/Auth/LoginForm';
+import SignUpForm from './Components/Auth/SignUpForm';
+import Todo from './Components/Todo/Todo';
+import AppLayout from './Components/Layout/AppLayout';
 
 function App() {
   return (
