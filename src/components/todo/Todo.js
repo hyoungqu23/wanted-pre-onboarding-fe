@@ -27,11 +27,11 @@ const Todo = () => {
 
   console.log(todos);
   return (
-    <>
+    <StyledTodo>
       <h1>Todo</h1>
       <TodoForm />
       <TodoList todos={todos} />
-    </>
+    </StyledTodo>
   );
 };
 
