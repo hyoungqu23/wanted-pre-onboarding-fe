@@ -4,6 +4,7 @@ import axios from 'axios';
 
 const TodoForm = () => {
   const [todo, setTodo] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e) => {
     setTodo(e.target.value);
@@ -24,20 +25,32 @@ const TodoForm = () => {
     );
 
     setTodo('');
+    console.log('할 일이 추가되었습니다.');
+    setIsLoading(false);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    setIsLoading(true);
     createTodo(todo);
   };
 
   return (
     <StyledTodoForm>
-      <input type="text" onChange={handleChange} />
-      <button type="submit" onClick={handleSubmit}>
-        Add
-      </button>
+      <input
+        type="text"
+        onChange={handleChange}
+        placeholder="Enter your Works..."
+      />
+      {!isLoading ? (
+        <button type="submit" onClick={handleSubmit}>
+          Add
+        </button>
+      ) : (
+        <button type="submit" disabled>
+          Add
+        </button>
+      )}
     </StyledTodoForm>
   );
 };
@@ -47,11 +60,8 @@ export default TodoForm;
 const StyledTodoForm = styled.form`
   display: flex;
   flex-direction: row;
-  gap: 1em;
-
-  input {
-    width: 100%;
-  }
+  justify-content: space-between;
+  width: 100%;
 
   input,
   button {
@@ -59,25 +69,25 @@ const StyledTodoForm = styled.form`
     padding: 0.5em;
     border-radius: 8px;
     height: 2em;
-    border: none;
-    background-color: #f5f5f5;
 
-    &:focus {
-      background-color: #ffc107;
+    &::placeholder {
+      color: #aaa;
+      font-size: 0.75em;
     }
+  }
 
-    &:hover {
-      border: 2.5px solid #ffc107;
-    }
+  input {
+    background-color: #e3e3e3;
   }
 
   button {
-    font-size: 0.8em;
-    font-weight: bold;
+    font-size: 1em;
     background-color: #ffc107;
+    font-weight: bold;
 
-    &:hover {
-      border: 2.5px solid black;
+    &:disabled {
+      background-color: #e3e3e3;
     }
   }
+}
 `;
