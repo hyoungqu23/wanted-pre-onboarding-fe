@@ -23,16 +23,19 @@ const TodoForm = () => {
         },
       },
     );
-
-    setTodo('');
-    console.log('할 일이 추가되었습니다.');
-    setIsLoading(false);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setIsLoading(true);
-    createTodo(todo);
+    if (todo) {
+      setIsLoading(true);
+      createTodo(todo);
+      setTodo('');
+      console.log('할 일이 추가되었습니다.');
+      setIsLoading(false);
+    } else {
+      alert('내용을 입력해주세요.');
+    }
   };
 
   return (
