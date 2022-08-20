@@ -8,6 +8,10 @@ import { checkEmail, checkPassword } from '../../utils/functions';
 const LoginForm = () => {
   const navigate = useNavigate();
 
+  if (localStorage.getItem('token')) {
+    navigate('/todo');
+  }
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
