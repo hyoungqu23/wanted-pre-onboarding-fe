@@ -152,9 +152,18 @@ const StyledTodoItem = styled.li`
 
   form {
     width: 100%;
-    border-bottom: 1px solid #333;
+
     display: flex;
     justify-content: space-between;
+
+    input {
+      background-color: #ddd;
+      border: none;
+      border-radius: 5px;
+      width: 80%;
+      padding: 0.5em;
+      font-size: 0.8em;
+    }
 
     div {
       width: 15%;
