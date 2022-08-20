@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -9,28 +9,7 @@ import {
   faTrashCan,
 } from '@fortawesome/free-solid-svg-icons';
 
-const TodoItem = () => {
-  // Set Todo State
-  const [currentTodos, setCurrentTodos] = useState([]);
-
-  // Get Todo Lists
-  const getTodos = async () => {
-    const response = await axios.get(
-      'https://5co7shqbsf.execute-api.ap-northeast-2.amazonaws.com/production/todos',
-      {
-        headers: {
-          Authorization: 'Bearer ' + localStorage.getItem('token'),
-        },
-      },
-    );
-
-    setCurrentTodos(response.data);
-  };
-
-  useEffect(() => {
-    getTodos();
-  }, []);
-
+const TodoItem = ({ todo, getTodos }) => {
   // Temporary Todo State
   const [isCompleted, setIsCompleted] = useState(false);
 
@@ -48,9 +27,18 @@ const TodoItem = () => {
     updateTodo(completeTodo);
   };
 
+  const handleEdit = (todo) => {
+    const editedTodo = {
+      ...todo,
+      todo: newTodo,
+    };
+
+    updateTodo(editedTodo);
+  };
+
   const updateTodo = async (todo) => {
     try {
-      const res = await axios.put(
+      const response = await axios.put(
         `https://5co7shqbsf.execute-api.ap-northeast-2.amazonaws.com/production/todos/${todo.id}`,
         {
           id: todo.id,
@@ -65,7 +53,7 @@ const TodoItem = () => {
           },
         },
       );
-      console.log('PUT', res);
+      console.log('PUT', response);
       getTodos();
     } catch (error) {
       console.log(error);
@@ -90,83 +78,69 @@ const TodoItem = () => {
   };
 
   return (
-    <Styledtodolist>
-      {currentTodos && currentTodos.length === 0 && 'No todo'}
-      {currentTodos &&
-        currentTodos.map((todo) => {
-          return (
-            <StyledTodoItem key={todo.id}>
-              {isEdit ? (
-                <form>
-                  <input
-                    type="text"
-                    defaultValue={todo.todo}
-                    onChange={(e) => {
-                      setNewTodo(e.target.value);
-                    }}
-                  />
-                  <div>
-                    <button
-                      onClick={() => {
-                        updateTodo(todo);
-                      }}
-                    >
-                      <FontAwesomeIcon icon={faCheck} />
-                    </button>
-                    <button
-                      onClick={() => {
-                        setIsEdit(!isEdit);
-                      }}
-                    >
-                      <FontAwesomeIcon icon={faXmark} />
-                    </button>
-                  </div>
-                </form>
-              ) : (
-                <div className="normal">
-                  <StyledTodo isCompleted={todo.isCompleted ? true : false}>
-                    {todo.todo}
-                  </StyledTodo>
-                  <StyledTodoButtons
-                    isCompleted={todo.isCompleted ? true : false}
-                  >
-                    <button
-                      onClick={() => {
-                        handleComplete(todo);
-                        setIsCompleted(!isCompleted);
-                      }}
-                    >
-                      <FontAwesomeIcon icon={faCheck} />
-                    </button>
-                    <button
-                      onClick={() => {
-                        setIsEdit(!isEdit);
-                      }}
-                    >
-                      <FontAwesomeIcon icon={faPen} />
-                    </button>
-                    <button
-                      onClick={() => {
-                        deleteTodo(todo.id);
-                      }}
-                    >
-                      <FontAwesomeIcon icon={faTrashCan} />
-                    </button>
-                  </StyledTodoButtons>
-                </div>
-              )}
-            </StyledTodoItem>
-          );
-        })}
-    </Styledtodolist>
+    <StyledTodoItem key={todo.id}>
+      {isEdit ? (
+        <form>
+          <input
+            type="text"
+            defaultValue={todo.todo}
+            onChange={(e) => {
+              setNewTodo(e.target.value);
+            }}
+          />
+          <div>
+            <button
+              onClick={() => {
+                handleEdit(todo);
+              }}
+            >
+              <FontAwesomeIcon icon={faCheck} />
+            </button>
+            <button
+              onClick={() => {
+                setIsEdit(!isEdit);
+              }}
+            >
+              <FontAwesomeIcon icon={faXmark} />
+            </button>
+          </div>
+        </form>
+      ) : (
+        <div className="normal">
+          <StyledTodo isCompleted={todo.isCompleted ? true : false}>
+            {todo.todo}
+          </StyledTodo>
+          <StyledTodoButtons isCompleted={todo.isCompleted ? true : false}>
+            <button
+              onClick={() => {
+                handleComplete(todo);
+                setIsCompleted(!isCompleted);
+              }}
+            >
+              <FontAwesomeIcon icon={faCheck} />
+            </button>
+            <button
+              onClick={() => {
+                setIsEdit(!isEdit);
+              }}
+            >
+              <FontAwesomeIcon icon={faPen} />
+            </button>
+            <button
+              onClick={() => {
+                deleteTodo(todo.id);
+              }}
+            >
+              <FontAwesomeIcon icon={faTrashCan} />
+            </button>
+          </StyledTodoButtons>
+        </div>
+      )}
+    </StyledTodoItem>
   );
 };
 
 export default TodoItem;
-
-const Styledtodolist = styled.ul`
-  width: 100%;
-`;
 
 const StyledTodoItem = styled.li`
   display: flex;
