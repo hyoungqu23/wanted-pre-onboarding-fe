@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { checkEmail, checkPassword } from '../../utils/functions';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLink } from '@fortawesome/free-solid-svg-icons';
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -77,7 +79,10 @@ const LoginForm = () => {
           Login
         </button>
       </form>
-      <Link to="/signup">Join us</Link>
+      <Link to="/signup">
+        <FontAwesomeIcon icon={faLink} />
+        Join us
+      </Link>
     </StyledLoginForm>
   );
 };
@@ -127,8 +132,18 @@ const StyledLoginForm = styled.div`
   }
 
   a {
-    color: #8af;
-    font-weight: bold;
+    font-size: 1.2em;
+    margin: 1em;
     text-decoration: none;
+    color: #8af;
+    text-align: center;
+
+    svg {
+      margin-right: 0.5em;
+    }
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 `;
