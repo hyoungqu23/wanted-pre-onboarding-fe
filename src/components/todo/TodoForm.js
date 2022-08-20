@@ -11,18 +11,24 @@ const TodoForm = () => {
   };
 
   const createTodo = async (todo) => {
-    await axios.post(
-      'https://5co7shqbsf.execute-api.ap-northeast-2.amazonaws.com/production/todos',
-      {
-        todo,
-      },
-      {
-        headers: {
-          Authorization: 'Bearer ' + localStorage.getItem('token'),
-          'Content-Type': 'application/json',
+    try {
+      const response = await axios.post(
+        'https://5co7shqbsf.execute-api.ap-northeast-2.amazonaws.com/production/todos',
+        {
+          todo,
         },
-      },
-    );
+        {
+          headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('token'),
+            'Content-Type': 'application/json',
+          },
+        },
+      );
+
+      console.log('POST', response);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleSubmit = (e) => {
@@ -81,6 +87,7 @@ const StyledTodoForm = styled.form`
 
   input {
     background-color: #e3e3e3;
+    width: 80%;
   }
 
   button {
