@@ -132,7 +132,8 @@ const StyledLoginForm = styled.div`
   }
 
   a {
-    font-size: 1.2em;
+    font-size: 0.8em;
+    font-weight: bold;
     margin: 1em;
     text-decoration: none;
     color: #8af;
