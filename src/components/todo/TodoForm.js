@@ -26,6 +26,7 @@ const TodoForm = () => {
       );
 
       console.log('POST', response);
+      setTodo('');
     } catch (error) {
       console.log(error);
     }
@@ -36,7 +37,6 @@ const TodoForm = () => {
     if (todo) {
       setIsLoading(true);
       createTodo(todo);
-      setTodo('');
       console.log('할 일이 추가되었습니다.');
       setIsLoading(false);
     } else {
@@ -48,17 +48,14 @@ const TodoForm = () => {
     <StyledTodoForm>
       <input
         type="text"
+        value={todo}
         onChange={handleChange}
         placeholder="Enter your Works..."
       />
       {!isLoading ? (
-        <button type="submit" onClick={handleSubmit}>
-          Add
-        </button>
+        <button onClick={handleSubmit}>Add</button>
       ) : (
-        <button type="submit" disabled>
-          Add
-        </button>
+        <button disabled>Add</button>
       )}
     </StyledTodoForm>
   );
