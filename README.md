@@ -2,10 +2,25 @@
 
 ## 실행 방법
 
-## 데모 영상
+1. 레포지토리 클론하기
 
-<iframe width="640" height="360" src="https://youtu.be/Djxotshd_Lg"  
- frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+```
+git clone
+```
+
+2. 패키지 설치
+
+```
+npm install
+```
+
+3. 시작하기
+
+```
+npm start
+```
+
+## 데모 영상
 
 [보러가기](https://youtu.be/Djxotshd_Lg)
 
