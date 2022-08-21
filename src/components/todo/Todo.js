@@ -22,6 +22,7 @@ const Todo = () => {
     );
 
     setCurrentTodos(response.data);
+    setIsUpdate(false);
   };
 
   useEffect(() => {

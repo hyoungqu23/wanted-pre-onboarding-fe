@@ -10,9 +10,6 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 const TodoItem = ({ todo, getTodos }) => {
-  // Temporary Todo State
-  const [isCompleted, setIsCompleted] = useState(false);
-
   const [newTodo, setNewTodo] = useState('');
 
   // Mode State
@@ -21,7 +18,7 @@ const TodoItem = ({ todo, getTodos }) => {
   const handleComplete = (todo) => {
     const completeTodo = {
       ...todo,
-      isCompleted: !isCompleted,
+      isCompleted: !todo.isCompleted,
     };
 
     updateTodo(completeTodo);
@@ -90,8 +87,10 @@ const TodoItem = ({ todo, getTodos }) => {
           />
           <div>
             <button
-              onClick={() => {
+              onClick={(e) => {
+                e.preventDefault();
                 handleEdit(todo);
+                setIsEdit(false);
               }}
             >
               <FontAwesomeIcon icon={faCheck} />
@@ -114,7 +113,6 @@ const TodoItem = ({ todo, getTodos }) => {
             <button
               onClick={() => {
                 handleComplete(todo);
-                setIsCompleted(!isCompleted);
               }}
             >
               <FontAwesomeIcon icon={faCheck} />

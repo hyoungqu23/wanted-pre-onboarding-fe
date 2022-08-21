@@ -10,9 +10,11 @@ import { faLink } from '@fortawesome/free-solid-svg-icons';
 const LoginForm = () => {
   const navigate = useNavigate();
 
-  if (localStorage.getItem('token')) {
-    navigate('/todo');
-  }
+  useEffect(() => {
+    if (localStorage.getItem('token')) {
+      navigate('/todo');
+    }
+  }, [navigate]);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
