@@ -78,6 +78,7 @@ const SignUpForm = () => {
           onChange={handlePasswordChange}
           isvalid={validation.password ? 'true' : 'false'}
           placeholder="Enter your password"
+          autoComplete="off"
         />
         <label>Password Confirm</label>
         <input
@@ -85,6 +86,7 @@ const SignUpForm = () => {
           onChange={handlePasswordConfirmChange}
           isvalid={validation.passwordConfirm ? 'true' : 'false'}
           placeholder="Enter your password again"
+          autoComplete="off"
         />
         <button
           type="submit"

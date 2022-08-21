@@ -64,12 +64,18 @@ const LoginForm = () => {
       <h1>Login</h1>
       <form>
         <label htmlFor="emailInput">Email</label>
-        <input type="text" id="emailInput" onChange={handleEmailChange} />
+        <input
+          type="text"
+          id="emailInput"
+          onChange={handleEmailChange}
+          autoComplete="off"
+        />
         <label htmlFor="passwordInput">PW</label>
         <input
           type="password"
           id="passwordInput"
           onChange={handlePasswordChange}
+          autoComplete="off"
         />
         <button
           type="submit"
@@ -90,6 +96,10 @@ const LoginForm = () => {
 export default LoginForm;
 
 const StyledLoginForm = styled.div`
+  h1 {
+    margin-bottom: 1em;
+  }
+
   display: flex;
   flex-direction: column;
   align-items: center;
