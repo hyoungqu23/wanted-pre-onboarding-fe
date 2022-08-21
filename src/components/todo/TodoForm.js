@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 
-const TodoForm = () => {
+const TodoForm = ({ update }) => {
   const [todo, setTodo] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
@@ -27,6 +27,7 @@ const TodoForm = () => {
 
       console.log('POST', response);
       setTodo('');
+      update(true);
     } catch (error) {
       console.log(error);
     }
